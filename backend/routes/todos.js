@@ -2,7 +2,6 @@ const { Router } = require('express')
 const Todo = require('../models/Todo')
 const router = Router()
 const multer = require('multer')
-const path = require('path')
 
 
 const upload = multer({ dest: './public/uploads' })
@@ -58,7 +57,10 @@ router.put('/update/:id', upload.any(), async (req, res) => {
         todo.originDescription = newTodo.originDescription;
         todo.superpowers = newTodo.superpowers;
         todo.catchPhrase = newTodo.catchPhrase;
-        todo.pathImage = file.path;
+
+        if(file !== undefined) {
+            todo.pathImage = file.path;
+        }
 
 
         todo.save().then(todo => {
